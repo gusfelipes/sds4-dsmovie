@@ -21,23 +21,20 @@ function Listing() {
   });
   useEffect(() => {
     axios
-      .get(`${BASE_URL}/movies?page=0&size=${pageNumber}`)
+      .get(`${BASE_URL}/movies?size=12&page=${pageNumber}`)
       .then((response) => {
         const data = response.data as MoviePage;
         setPage(data);
       });
   }, [pageNumber]);
 
-  // forma errada
-  // axios.get(`${BASE_URL}/movies?page=0&size=10`).then((response) => {
-  //   const data = response.data as MoviePage;
-  //   setPageNumber(data.number);
-  //   console.log(response.data);
-  // });
+  const handlePageChange = (newPageNumber: number) => {
+    setPageNumber(newPageNumber);
+  };
 
   return (
     <>
-      <Pagination />
+      <Pagination page={page} onChange={handlePageChange} />
       <div className="container">
         <div className="row">
           {page.content.map((movie) => (
